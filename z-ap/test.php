@@ -77,12 +77,12 @@ foreach ($items as $item) {
 echo "--------変更----------\n";
 
 $item->setCode(8888);
-$item->setName("ダークマター");
-$item->setPrice(999999);
-$item->setQty(0);
-$item->setDetail("存在しないもの");
+$item->setName("オリハルコン");
+$item->setPrice(5000);
+$item->setQty(100);
+$item->setDetail("世界一硬い物質");
 
-$result = $dao->updateItem(8888, $item);
+$result = $dao->updateItem(999999, $item);
 var_dump($result);
 
 $items = $dao->getItem($item, 0, 0);

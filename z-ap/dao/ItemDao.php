@@ -1,5 +1,5 @@
 <?php
-require_once 'J:/enrlprc/html/kura/z-ap/ItemDto.php';
+require_once '/export/home/g2sn/enrlprc/html/kura/z-ap/ItemDto.php';
 
 /**
  * DatabaseAccessObject
@@ -22,19 +22,17 @@ class ItemDao
 
     private function pdoConnect()
     {
-        try {
+
             $this->pdo = new PDO(
-                'mysql:dbname=sampledb000;host=localhost;charset=utf8', 'root',
-                'kura',
+                'mysql:dbname=sampledb000;host=192.168.0.47;charset=utf8', 'test',
+                'test',
                 array(
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                     PDO::ATTR_EMULATE_PREPARES => false,
                     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
                 ));
-        } catch (PDOException $e) {
-            $error = $e->getMessage();
-        }
+
     }
 
     /**
@@ -98,7 +96,6 @@ class ItemDao
             $sql .= 'and detail like ? ';
         }
 
-        try {
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(1, $code, PDO::PARAM_INT);
             $stmt->bindValue(2, '%' . $this->esc_str($name) . '%',
@@ -108,9 +105,7 @@ class ItemDao
             $stmt->bindValue(5, '%' . $this->esc_str($detail) . '%',
                 PDO::PARAM_STR);
             $stmt->execute();
-        } catch (PDOException $e) {
-            $error = $e->getMessage();
-        }
+
 
         $rItems = array();
         foreach ($stmt as $row) {
@@ -135,13 +130,10 @@ class ItemDao
     public function deleteItem($code)
     {
         $sql = 'delete from item where code = ? ';
-        try {
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(1, $code, PDO::PARAM_INT);
             $stmt->execute();
-        } catch (PDOException $e) {
-            $error = $e->getMessage();
-        }
+
         return $stmt->rowCount();
     }
 
@@ -162,8 +154,6 @@ class ItemDao
 
         $sql = 'insert into item (code, name, price, qty, detail) values(?, ?, ?, ?, ?) ';
 
-        try {
-
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(1, $code, PDO::PARAM_INT);
             $stmt->bindValue(2, $this->esc_str($name), PDO::PARAM_STR);
@@ -171,9 +161,7 @@ class ItemDao
             $stmt->bindValue(4, $qty, PDO::PARAM_INT);
             $stmt->bindValue(5, $this->esc_str($detail), PDO::PARAM_STR);
             $stmt->execute();
-        } catch (PDOException $e) {
-            $error = $e->getMessage();
-        }
+
         return $stmt->rowCount();
     }
 
@@ -202,7 +190,6 @@ class ItemDao
             detail = ?
             where code = ? ';
 
-        try {
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(1, $code, PDO::PARAM_INT);
             $stmt->bindValue(2, $this->esc_str($name), PDO::PARAM_STR);
@@ -211,9 +198,7 @@ class ItemDao
             $stmt->bindValue(5, $this->esc_str($detail), PDO::PARAM_STR);
             $stmt->bindValue(6, $beforeCode, PDO::PARAM_INT);
             $stmt->execute();
-        } catch (PDOException $e) {
-            $error = $e->getMessage();
-        }
+
         return $stmt->rowCount();
     }
 }
