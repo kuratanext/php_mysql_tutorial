@@ -24,7 +24,7 @@ class ItemDao
     {
 
             $this->pdo = new PDO(
-                'mysql:dbname=sampledb000;host=192.168.0.47;charset=utf8', 'test',
+                'mysql:dbname=sampledb000;host=localhost;charset=utf8', 'test',
                 'test',
                 array(
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
